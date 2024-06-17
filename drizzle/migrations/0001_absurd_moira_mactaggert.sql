@@ -1,0 +1,1 @@
+ALTER TABLE "app_device" ADD COLUMN "origin" text;
