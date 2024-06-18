@@ -1,15 +1,36 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { InputText } from "@/components/ui/input";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { InputText } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { TRegisterForm, schema } from "../_entities/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerAction } from "../_actions/register-action";
 
 export const RegisterForm = () => {
-  const { control } = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<TRegisterForm>({
+    mode: "all",
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = handleSubmit(async (data) => {
+    const res = await registerAction(data);
+    if (res.error) {
+      alert(res.error.message);
+    }
+
+    if (res.success) {
+      alert(res.success.message);
+    }
+  });
+
   return (
-    <form className="flex flex-col gap-y-4">
+    <form onSubmit={onSubmit} className="flex flex-col gap-y-4">
       <h1 className="font-semibold text-2xl mb-6 text-sky-400">
         Daftar untuk melanjutkan
       </h1>
@@ -43,15 +64,7 @@ export const RegisterForm = () => {
           name="confirmPassword"
         />
       </div>
-      <div className="w-full flex justify-between items-center">
-        <div className="flex items-center">
-          <Checkbox />
-          <span className="text-xs sm:text-sm font-semibold text-sky-700">
-            Saya menerima Syarat dan Ketentuan
-          </span>
-        </div>
-      </div>
-      <Button disabled>Daftar Sekarang</Button>
+      <Button disabled={!isValid}>Daftar Sekarang</Button>
       <div className="w-full flex justify-center">
         <div className="text-xs sm:text-sm text-gray-500">
           Sudah Mempunyai Akun?{" "}

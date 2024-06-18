@@ -1,7 +1,7 @@
 import { timestamp, pgTable, text, uuid } from "drizzle-orm/pg-core";
 
 export const users = pgTable("app_user", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   fullname: text("fullname"),
   password: text("password"),
   email: text("email").notNull().unique(),
@@ -9,7 +9,7 @@ export const users = pgTable("app_user", {
 });
 
 export const devices = pgTable("app_device", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   brand: text("brand"),
   modelType: text("modelType"),
   origin: text("origin"),

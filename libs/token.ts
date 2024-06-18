@@ -7,7 +7,7 @@ type TTokenPayload = {
 };
 
 export const generateToken = async (
-  payload: TTokenPayload
+  payload: TTokenPayload,
 ): Promise<string> => {
   const expiresAt = new Date(Date.now() + 60 * 60 * 24 * 1000);
   const secret = process.env.AUTH_SECRET;
@@ -23,8 +23,15 @@ export const generateToken = async (
   return token;
 };
 
-export const verifyToken = async (token: string): Promise<JWTPayload> => {
-  const secret = process.env.AUTH_SECRET;
-  const { payload } = await jwtVerify(token, new TextEncoder().encode(secret));
-  return payload;
+export const verifyToken = async (token: string) => {
+  try {
+    const secret = process.env.AUTH_SECRET;
+    const { payload } = await jwtVerify(
+      token,
+      new TextEncoder().encode(secret),
+    );
+    return payload as TTokenPayload;
+  } catch (err) {
+    throw err;
+  }
 };
