@@ -4,11 +4,25 @@ import { Button } from "@/components/ui/button";
 import { InputText } from "@/components/ui/input";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { TLoginForm, schema } from "../_entities/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const LoginForm = () => {
-  const { control } = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<TLoginForm>({
+    resolver: zodResolver(schema),
+    mode: "all",
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
+
   return (
-    <form className="flex flex-col gap-y-4">
+    <form onSubmit={onSubmit} className="flex flex-col gap-y-4">
       <h1 className="font-semibold text-2xl mb-6 text-sky-400">
         Selamat Datang di U-Lock
       </h1>
@@ -36,7 +50,7 @@ export const LoginForm = () => {
           Lupa kata sandi?
         </Link>
       </div>
-      <Button disabled>Masuk</Button>
+      <Button disabled={!isValid}>Masuk</Button>
       <div className="w-full flex justify-center">
         <div className="text-xs sm:text-sm text-gray-500">
           Belum Mempunyai Akun?{" "}
