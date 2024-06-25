@@ -1,9 +1,16 @@
+import { Fragment } from "react";
 import { HeroSection } from "./hero-section";
+import { CTASection } from "./cta-section";
+import { SellingPointSection } from "./selling-point-section";
+import { CheckSection } from "./check-section";
 
 export const LandingModules = () => {
   return (
-    <div className="w-full flex flex-col h-full min-h-screen max-w-7xl px-6">
+    <Fragment>
       <HeroSection />
-    </div>
+      <CTASection />
+      <CheckSection />
+      <SellingPointSection />
+    </Fragment>
   );
 };
