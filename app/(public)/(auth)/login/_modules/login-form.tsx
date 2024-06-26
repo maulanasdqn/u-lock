@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { TLoginForm, schema } from "../_entities/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { loginAction } from "../_actions/login-action";
 
 export const LoginForm = () => {
   const {
@@ -15,10 +16,22 @@ export const LoginForm = () => {
   } = useForm<TLoginForm>({
     resolver: zodResolver(schema),
     mode: "all",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const onSubmit = handleSubmit(async (data) => {
+    const res = await loginAction(data);
+
+    if (res?.error) {
+      alert(res?.error?.message);
+    }
+
+    if (res?.success) {
+      alert(res?.success?.message);
+    }
   });
 
   return (

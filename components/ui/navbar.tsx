@@ -32,13 +32,13 @@ export const Navbar: FC = (): ReactElement => {
               Beranda
             </Link>
             <Link
-              href={"/news"}
+              href={"#"}
               className="text-sm md:text-lg font-semibold hover:text-sky-600 text-sky-700"
             >
               Kontak Kami
             </Link>
             <Link
-              href={"/articles"}
+              href={"#"}
               className="text-sm md:text-lg font-semibold hover:text-sky-600 text-sky-700"
             >
               Cek IMEI

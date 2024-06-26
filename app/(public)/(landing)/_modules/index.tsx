@@ -11,6 +11,9 @@ export const LandingModules = () => {
       <CTASection />
       <CheckSection />
       <SellingPointSection />
+      <footer className="bg-sky-200 w-full flex items-center justify-center h-[100px]">
+        <h1>Made with ❤️ by U-Lock</h1>
+      </footer>
     </Fragment>
   );
 };
